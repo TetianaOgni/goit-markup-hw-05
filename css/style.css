@@ -8,6 +8,7 @@
   --accent-color: #e7e9fc;
   --light-slate-color: #8e8f99;
   --success-color: #31d0aa;
+  --transition-dur-and-func: 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 body {
@@ -159,6 +160,7 @@ img {
 }
 
 .header-link {
+  position: relative;
   display: block;
   font-weight: 500;
   font-size: 16px;
@@ -167,6 +169,19 @@ img {
   color: var(--dark-color);
   padding-top: 24px;
   padding-bottom: 24px;
+
+  transition: color var(--transition-dur-and-func);
+}
+
+.header-link.current::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 4px;
+  background-color: var(--pressed-state-color);
+  border-radius: 2px;
+  left: 0;
+  bottom: -1px;
 }
 
 .header-link:hover,
@@ -192,6 +207,8 @@ img {
   color: var(--text-color);
   padding-top: 24px;
   padding-bottom: 24px;
+
+  transition: color var(--transition-dur-and-func);
 }
 
 /* -----Hero----- */
@@ -239,6 +256,8 @@ img {
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
   padding: 16px 32px;
   min-width: 170px;
+
+  transition: background-color var(--transition-dur-and-func);
 }
 
 .hero-btn:hover,
@@ -354,15 +373,17 @@ img {
   display: flex;
   align-items: center;
   justify-content: center;
-}
 
-.team-icon-svg {
-  fill: var(--contrast-color);
+  transition: backgroung-color var(--transition-dur-and-func);
 }
 
 .team-icon-link:hover,
 .team-icon-link:focus {
   background-color: var(--pressed-state-color);
+}
+
+.team-icon-svg {
+  fill: var(--contrast-color);
 }
 
 /* -----Customers----- */
@@ -391,6 +412,9 @@ img {
   align-items: center;
   justify-content: center;
   color: var(--light-slate-color);
+
+  transition: color var(--transition-dur-and-func),
+    border-color var(--transition-dur-and-func);
 }
 
 .customers-icon-svg {
@@ -422,6 +446,13 @@ img {
   background-color: var(--light-color);
   border: 1px solid var(--accent-color);
   padding: 12px 24px;
+
+  box-shadow: none;
+
+  transition: color var(--transition-dur-and-func),
+    background-color var(--transition-dur-and-func),
+    box-shadow var(--transition-dur-and-func),
+    border-color var(--transition-dur-and-func);
 }
 
 .filter-btn:hover,
@@ -462,6 +493,32 @@ img {
   padding-left: 16px;
   padding-top: 32px;
   padding-bottom: 32px;
+}
+
+.card-overlay-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.card-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  transform: translate(0, 100%);
+
+  padding: 40px 32px 16px;
+  color: var(--light-color);
+  background-color: var(--primary-brand-color);
+
+  transition: transform var(--transition-dur-and-func);
+}
+
+.card-link:hover .card-overlay,
+.card-link:focus .card-overlay {
+  transform: translate(0, 0);
 }
 
 /* -----Footer----- */
@@ -521,6 +578,8 @@ img {
   border-radius: 50%;
   justify-content: center;
   align-items: center;
+
+  transition: backgroung-color var(--transition-dur-and-func);
 }
 
 .footer-icon-svg {
@@ -530,4 +589,81 @@ img {
 .footer-icon-link:hover,
 .footer-icon-link:focus {
   background-color: var(--success-color);
+}
+
+/* -----Modal----- */
+
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(46, 47, 66, 0.4);
+
+  transition: opacity var(--transition-dur-and-func),
+    visibility var(--transition-dur-and-func);
+}
+
+.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.modal-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  width: 408px;
+  min-height: 576px;
+
+  background-color: #fcfcfc;
+  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.14), 0px 1px 3px rgba(0, 0, 0, 0.12),
+    0px 2px 1px rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+
+  transform: translate(-50%, -50%) scale(1);
+
+  transition: transform var(--transition-dur-and-func);
+}
+
+.backdrop.is-hidden .modal-container {
+  transform: translate(-50%, -50%) scale(0);
+}
+
+.close-btn-modal {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 24px;
+  height: 24px;
+  padding: 0;
+
+  background-color: var(--accent-color);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+
+  transition: background-color var(--transition-dur-and-func);
+}
+
+.close-btn-modal:hover,
+.close-btn-modal:focus {
+  background-color: var(--pressed-state-color);
+}
+
+.close-btn-modal-svg {
+  transition: fill var(--transition-dur-and-func);
+}
+
+.close-btn-modal:hover .close-btn-modal-svg,
+.close-btn-modal:focus .close-btn-modal-svg {
+  fill: var(--contrast-color);
 }
